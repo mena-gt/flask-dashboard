@@ -1,0 +1,7 @@
+# APP
+
+FLASK_APP=core
+FLASK_ENV=production
+FLASK_DEBUG=0
+FLASK_TEST=0
+SECRET=

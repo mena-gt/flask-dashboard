@@ -1,0 +1,4 @@
+-r base.txt
+
+# Add your dependencies here
+python-dotenv==0.20.0

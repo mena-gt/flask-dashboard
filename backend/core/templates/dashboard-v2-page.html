@@ -1,0 +1,13 @@
+{% extends 'dashboard-page.html' %}
+
+
+{% block title %} CHS | Dashboard v2.0 {% endblock title %}
+
+{% block filter_section %}
+	{% include 'components/filterbar-v2-component.html' %}
+{% endblock filter_section %}
+
+{% block body_scripts %}
+	{{ super () }}
+	<script src="{{ url_for ('static', filename='js/main-v2.js') }}"></script>
+{% endblock body_scripts %}

@@ -1,0 +1,38 @@
+
+version: "3"
+
+services:
+
+    serversvc:
+        build: 
+            context: .
+            dockerfile: ./docker/Dockerfile
+        container_name: gunicorn
+        hostname: webserver
+        command: gunicorn --bind 0.0.0.0:8000 wsgi:application
+        ports:
+            - "8000:8000"
+        networks:
+            - flasknet
+    
+    proxysvc:
+        container_name: nginx
+        build: ./docker/nginx/
+        ports:
+            - "80:80"
+        networks:
+            - flasknet
+        depends_on: 
+            - serversvc
+        links:
+            - "serversvc:gunicorn"
+
+networks:
+    flasknet:
+        driver: bridge
+
+volumes:
+    pg_vol:
+        driver: local
+    pgadmin_vol:
+        driver: local

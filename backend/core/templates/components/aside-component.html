@@ -1,0 +1,28 @@
+{% import 'components/icons-component.html' as icon %}
+
+{% block aside %}
+<aside class="hidden lg:flex md:w-64 md:flex-col md:fixed md:inset-y-0">
+	<div class="border-r pt-5 flex flex-col flex-grow bg-first">
+		<div class="flex-shrink-0 px-5 flex items-center">
+			<p class="text-5xl text-white">CHS</p>
+		</div>
+		<div class="flex-grow mt-5 flex flex-col">
+			<nav class="flex-1 px-1 pb-4 space-y-1">
+				<!-- Current: "bg-gray-100 text-gray-900", Default: "text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+				<a class="bg-second text-white opacity-80 group py-2 px-2 flex border-l-4 border-white items-center text-sm font-medium">
+					{{ icon.svg('monitoring', 'mr-3 h-6 w-6') }}
+					Monitorización
+				</a>
+				<a class="text-white opacity-80 hover:bg-second group py-2 px-2 flex items-center text-sm font-medium">
+					{{ icon.svg('analysis', 'mr-3 h-6 w-6') }}
+					Análisis Energético
+				</a>
+				<a class="text-white opacity-80 hover:bg-second group py-2 px-2 flex items-center text-sm font-medium">
+					{{ icon.svg ('config', 'mr-3 h-6 w-6') }}
+					Configuración
+				</a>
+			</nav>
+		</div>
+	</div>
+</aside>
+{% endblock aside %}

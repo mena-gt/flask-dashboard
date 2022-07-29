@@ -1,0 +1,1 @@
+web: gunicorn --chdir backend/ heroku:server -b 0.0.0.0:$PORT
