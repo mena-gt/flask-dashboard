@@ -1,4 +1,4 @@
-FROM python:3.8
+FROM python:3.8.13-slim
 
 WORKDIR /usr/src/app
 
@@ -14,4 +14,4 @@ RUN pip install --no-cache-dir -r requirements/production.txt
 
 COPY ./backend/ /usr/src/app/
 
-# ENTRYPOINT ["/usr/src/app/entrypoint.sh"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "wsgi:application"]
