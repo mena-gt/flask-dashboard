@@ -894,18 +894,30 @@
         this.charts[2].inst = buildAutoconsumoChart (this.elements[7].inst);
     }
 
-    this.CUERVAPlugin.prototype.loop = async function (hrs_per_min) {
+    this.CUERVAPlugin.prototype.loop = async function (hrs_per_min, day) {
         if (this.settings.debug)
             console.log (hrs_per_min + ' Horas por minuto.');
+        
+        if(this.settings.debug)
+            console.log ('Iniciando en el día ' + day + '.')
 
         var interval = new Number (hrs_per_min);
-
         if (interval < 1 || interval > 4) {
             console.error ('Parameto Invalid!');
             console.error ('Los valores permitidos para el parametro ' +
                 '"hrs_por_min" son de [0, 4].');
             return;
         }
+
+        var currentDay = new Number (day);
+        if (currentDay < 1 || currentDay > 2) {
+            console.error ('Parameto Invalid!');
+            console.error ('Los valores permitidos para el parametro ' +
+                '"dia" son de 1 y 2.');
+            return;
+        }
+
+        this.status.day = currentDay - 1;
 
         var currentDate = generateDate (this.status);
         setDateFilterArea (this.elements[10].inst, currentDate);
@@ -997,15 +1009,19 @@
                         this.status.hour
                     );
                 }
-
-
             }
 
             if (isLastHour (this.status)) {
-                this.charts[0].inst = rebuildStatsChart (
+                updateStatus (this.status);
+
+                const url = new URL (window.location.href);
+                url.searchParams.set ('dia', this.status.day + 1);
+                window.location.href = url;
+                
+                /*this.charts[0].inst = rebuildStatsChart (
                     this.elements[1].inst,
                     this.charts[0].inst
-                );
+                );*/
             }
 
             updateStatus (this.status);
@@ -1029,5 +1045,7 @@ window.addEventListener ('DOMContentLoaded', function () {
 
     const url = new URL (window.location.href);
     const hrs_per_min = url.searchParams.get ('hrs_por_min') || 1;
-    plugin.loop (hrs_per_min);
+    const day = url.searchParams.get ('dia') || 1;
+
+    plugin.loop (hrs_per_min, day);
 });
